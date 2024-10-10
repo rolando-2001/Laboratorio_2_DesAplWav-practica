@@ -1,0 +1,70 @@
+<div class="container" style="margin-top: 70px;">
+    <div class="row mt-5">
+        <h3 class="text-center text-uppercase p-2">Agregar Nuevo Detalle</h3>
+
+        <form action="/form" method="POST">
+            <div class="mb-3">
+                <label for="quantity" class="form-label">Cantidad</label>
+                <input type="number" class="form-control" id="quantity" name="quantity" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">Precio</label>
+                <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="order_dish_id" class="form-label">Seleccionar Orden</label>
+                <select class="form-select" id="order_dish_id" name="order_dish_id">
+                    <option value="">Seleccione una orden</option>
+                    {{#each order}} 
+                    <option value="{{this._id}}">{{this.order_date}}</option>
+                    {{/each}} 
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="dish_id" class="form-label">Seleccionar Plato</label>
+                <select class="form-select" id="dish_id" name="dish_id">
+                    <option value="">Seleccione un Plato</option>
+                    {{#each dish}} <!-- Reemplaza 'dish' con la variable que contiene los platos -->
+                    <option value="{{this._id}}">{{this.name}} - ${{this.price}}</option>
+                    {{/each}}
+                </select>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="createOrder" name="createOrder">
+                <label class="form-check-label" for="createOrder">Crear una nueva orden</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Agregar Detalle</button>
+            <a href="/ruta-de-regreso" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+
+<!-- Enlace a Font Awesome para los iconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script>
+    document.getElementById('createOrder').addEventListener('change', function() {
+        var orderSelect = document.getElementById('order_dish_id');
+        if (this.checked) {
+            orderSelect.disabled = true; 
+            orderSelect.value = ""; 
+        } else {
+            orderSelect.disabled = false; 
+        }
+    });
+
+    document.getElementById('order_dish_id').addEventListener('change', function() {
+        var createOrder = document.getElementById('createOrder');
+        if (this.value) {
+            createOrder.checked = false; 
+            createOrder.disabled = true; 
+        } else {
+            createOrder.disabled = false; 
+        }
+    });
+</script>

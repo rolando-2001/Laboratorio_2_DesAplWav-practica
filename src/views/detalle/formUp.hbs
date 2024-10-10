@@ -1,0 +1,40 @@
+<div class="container" style="margin-top: 70px;">
+    <div class="row mt-5">
+        <h3 class="text-center text-uppercase p-2">Actualizar Detalle</h3>
+
+        <form action="/actualizar/{{item._id}}" method="POST"> 
+            <div class="mb-3">
+                <label for="quantity" class="form-label">Cantidad</label>
+                <input type="number" class="form-control" id="quantity" name="quantity" value="{{item.quantity}}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">Precio</label>
+                <input type="number" class="form-control" id="price" name="price" step="0.01" value="{{item.price}}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="order_dish_id" class="form-label">Seleccionar Orden</label>
+                <select class="form-select" id="order_dish_id" name="order_dish_id">
+                    <option value="">Seleccione una orden</option>
+                    {{#each order}} 
+                    <option value="{{this._id}}">{{this.order_date}}</option>
+                    {{/each}} 
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="dish_id" class="form-label">Seleccionar Plato</label>
+                <select class="form-select" id="dish_id" name="dish_id">
+                    <option value="">Seleccione un Plato</option>
+                    {{#each dish}} <!-- Reemplaza 'dish' con la variable que contiene los platos -->
+                    <option value="{{this._id}}">{{this.name}} - ${{this.price}}</option>
+                    {{/each}}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Actualizar Detalle</button>
+            <a href="/ruta-de-regreso" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>

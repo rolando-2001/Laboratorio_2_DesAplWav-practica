@@ -1,0 +1,67 @@
+<div class="container" style="margin-top: 70px;">
+    <div class="row mt-5">
+        <h3 class="text-center text-uppercase p-2">Lista de Órdenes de Venta y Detalles</h3>
+
+        {{#if ordenes}}
+        <table class="table table-striped table-hover text-center align-middle">
+            <thead>
+                <tr class="table-dark">
+                    <th scope="col" class="col-2">Fecha de Orden</th>
+                    <th scope="col" class="col-3">Total</th>
+                    <th scope="col" class="col-2">Estado</th>
+                    <th scope="col" class="col-2">PDF</th>
+                    <th scope="col" class="col-3">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each ordenes}}
+                <tr class="{{#if (eq status 'completed')}}table-success{{else if (eq status 'pending')}}table-warning{{else if (eq status 'cancelled')}}table-danger{{/if}}">
+                    <td>{{ order_date}}</td> <!-- Formateo de la fecha -->
+                    <td>${{total}}</td> <!-- Formateo del total -->
+                    <td>{{status}}</td>
+                    <td>
+                        <a href="{{invoice_report_url}}" target="_blank" class="btn btn-outline-info btn-sm">
+                            <i class="fas fa-file-pdf"></i> Ver PDF
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/update/{{_id}}" class="btn btn-warning btn-sm" type="button" title="Editar">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a  href="/delete/{{_id}}" class="btn btn-danger btn-sm" type="button" title="Eliminar">
+                            <i class="fas fa-trash"></i>
+                        <a />
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+            <tfoot>
+                <tr class="table-dark">
+                    <td colspan="5">ÓRDENES Y DETALLES DE VENTA</td>
+                </tr>
+            </tfoot>
+        </table>
+        {{else}}
+        <div class="card text-center mx-auto" style="width: 350px;">
+            <div class="card-header">
+                <h3>No hay órdenes registradas</h3>
+            </div>
+            <div class="card-body">
+                <p>Presiona este botón para registrar una nueva orden.</p>
+                <a href="#" class="btn btn-primary">Crear Orden</a>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>
+
+<!-- Enlace a Font Awesome para los iconos -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script>
+    function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('es-ES', options); // Cambiar 'es-ES' según el idioma deseado
+}
+
+</script>
